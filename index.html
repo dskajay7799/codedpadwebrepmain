@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CodePad — Save &amp; Share Code</title>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Highlight.js for syntax highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+
+  <!-- ── Header ─────────────────────────────────────────── -->
+  <header class="site-header">
+    <div class="logo">
+      <span class="logo-icon">⬡</span>
+      <span class="logo-text">Code<strong>Pad</strong></span>
+    </div>
+    <p class="tagline">Paste · Save · Share</p>
+  </header>
+
+  <!-- ── Main Layout ────────────────────────────────────── -->
+  <main class="container">
+
+    <!-- LEFT: Save Panel -->
+    <section class="panel" id="save-panel">
+      <div class="panel-header">
+        <span class="panel-num">01</span>
+        <h2>Write &amp; Save</h2>
+      </div>
+
+      <!-- Language selector -->
+      <div class="toolbar">
+        <label for="lang-select" class="toolbar-label">Language</label>
+        <select id="lang-select">
+          <option value="plaintext">Plain Text</option>
+          <option value="javascript" selected>JavaScript</option>
+          <option value="python">Python</option>
+          <option value="html">HTML</option>
+          <option value="css">CSS</option>
+          <option value="bash">Bash</option>
+          <option value="json">JSON</option>
+          <option value="sql">SQL</option>
+          <option value="cpp">C++</option>
+          <option value="java">Java</option>
+          <option value="typescript">TypeScript</option>
+          <option value="rust">Rust</option>
+          <option value="go">Go</option>
+        </select>
+
+        <label for="expiry-select" class="toolbar-label">Expires</label>
+        <select id="expiry-select">
+          <option value="never">Never</option>
+          <option value="1h">1 Hour</option>
+          <option value="24h">24 Hours</option>
+          <option value="7d">7 Days</option>
+        </select>
+      </div>
+
+      <!-- Code textarea -->
+      <div class="textarea-wrap">
+        <textarea
+          id="code-input"
+          spellcheck="false"
+          placeholder="// Paste your code here…"
+          autofocus
+        ></textarea>
+        <div class="line-count" id="line-count">1 line</div>
+      </div>
+
+      <!-- Save button -->
+      <button class="btn btn-primary" id="save-btn">
+        <span class="btn-icon">↑</span>
+        <span class="btn-text">Save Code</span>
+      </button>
+
+      <!-- Passkey result box -->
+      <div class="result-box hidden" id="save-result">
+        <p class="result-label">Your passkey</p>
+        <div class="passkey-row">
+          <code class="passkey" id="passkey-display"></code>
+          <button class="icon-btn" id="copy-key-btn" title="Copy passkey">⧉</button>
+        </div>
+        <p class="result-hint">Share this key to let others load your code.</p>
+        <div class="timestamp" id="save-timestamp"></div>
+      </div>
+
+      <!-- Error -->
+      <div class="error-box hidden" id="save-error"></div>
+    </section>
+
+    <!-- DIVIDER -->
+    <div class="divider"><span>or</span></div>
+
+    <!-- RIGHT: Load Panel -->
+    <section class="panel" id="load-panel">
+      <div class="panel-header">
+        <span class="panel-num">02</span>
+        <h2>Load by Passkey</h2>
+      </div>
+
+      <div class="input-row">
+        <input
+          type="text"
+          id="passkey-input"
+          placeholder="Enter passkey (e.g. a1b2c3)"
+          maxlength="12"
+          spellcheck="false"
+        />
+        <button class="btn btn-secondary" id="load-btn">
+          <span class="btn-icon">↓</span>
+          <span class="btn-text">Load</span>
+        </button>
+      </div>
+
+      <!-- Error -->
+      <div class="error-box hidden" id="load-error"></div>
+
+      <!-- Loaded code display -->
+      <div class="code-output hidden" id="code-output">
+        <div class="output-toolbar">
+          <span class="output-lang" id="output-lang-badge">text</span>
+          <span class="output-time" id="output-timestamp"></span>
+          <button class="icon-btn" id="copy-code-btn" title="Copy code">⧉ Copy</button>
+        </div>
+        <pre><code id="code-display" class="hljs"></code></pre>
+      </div>
+
+      <!-- Loading spinner -->
+      <div class="loader hidden" id="loader">
+        <div class="spinner"></div>
+        <span>Fetching…</span>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── Footer ─────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <p>CodePad &copy; 2025 · Code lives here, temporarily or forever.</p>
+  </footer>
+
+  <!-- Toast notification -->
+  <div class="toast hidden" id="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
